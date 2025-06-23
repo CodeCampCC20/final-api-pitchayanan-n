@@ -1,19 +1,39 @@
 import prisma from "../configs/prisma.js";
+import bcrypt from "bcryptjs";
 
 export const getMeUser = async (req, res, next) => {
   try {
-    const { id } = req.user;
-    console.log(id);
-    const user = await prisma.user.findFirst({
-      where: {
-        id: Number(id)
-      },
-      omit: {
-        password: true
+    const user = await prisma.user.findUnique({
+      where :{
+        id : req.user.id
       }
     })
 
-    res.json({ result: user })
+    res.json({ id: user.id, username: user.username})
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { username, password } = req.body;
+    console.log(id, username);
+
+    const hashPassword = bcrypt.hashSync(password, 10)
+
+    const user = await prisma.user.update({
+      where: {
+        id: req.user.id
+      },
+      data: {
+        username: username,
+        password: hashPassword
+      }
+    })
+
+    res.json({ id: user.id, username: user.username });
   } catch (error) {
     next(error);
   }

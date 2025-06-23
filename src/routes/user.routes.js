@@ -1,8 +1,10 @@
 import express from 'express';
-import { getMeUser } from '../controllers/user.controller.js';
+import { getMeUser, updateUser } from '../controllers/user.controller.js';
+import { authCheckUser } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.get("/me", getMeUser)
+router.get("/me", authCheckUser, getMeUser)
+router.patch("/me", authCheckUser, updateUser)
 
 export default router;

@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post("/register/doctor",validate(registerSchemaDoctor), registerDoctor);
 router.post("/register/user", validate(registerSchemaUser), registerUser);
+
 router.post("/login/user", loginUser);
 router.post("/login/doctor", loginDoctor);
 

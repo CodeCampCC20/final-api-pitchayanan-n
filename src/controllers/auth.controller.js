@@ -28,7 +28,7 @@ export const registerDoctor = async (req, res, next) => {
       },
     });
 
-    res.status(200).json({ message: `Register ${result.username} Success` });
+    res.status(200).json({ message: `Register ${result.username} Successfully` });
   } catch (error) {
     next(error);
   }
@@ -58,7 +58,7 @@ export const registerUser = async (req, res, next) => {
       },
     });
 
-    res.status(200).json({ message: `Register ${result.username} Success` });
+    res.status(200).json({ message: `Register ${result.username} Successfully` });
   } catch (error) {
     next(error);
   }
@@ -88,7 +88,7 @@ export const loginDoctor = async (req, res, next) => {
       role: doctor.role,
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
 
     res.json({
@@ -125,7 +125,7 @@ export const loginUser = async (req, res, next) => {
       role: user.role,
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
 
     res.json({
